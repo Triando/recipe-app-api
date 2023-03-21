@@ -7,8 +7,8 @@ import os
 
 from PIL import Image
 
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 from django.urls import reverse
 
 from rest_framework import status
@@ -17,12 +17,12 @@ from rest_framework.test import APIClient
 from core.models import (
     Recipe,
     Tag,
-    Ingredient
+    Ingredient,
 )
 
 from recipe.serializers import (
     RecipeSerializer,
-    RecipeDetailSerializer
+    RecipeDetailSerializer,
 )
 
 
@@ -410,7 +410,7 @@ class ImageUploadTests(TestCase):
         self.client = APIClient()
         self.user = get_user_model().objects.create_user(
             'user@example.com',
-            'password123'
+            'password123',
         )
         self.client.force_authenticate(self.user)
         self.recipe = create_recipe(user=self.user)
@@ -419,7 +419,7 @@ class ImageUploadTests(TestCase):
         self.recipe.image.delete()
 
     def test_upload_image(self):
-        """Test uploading an image to a recipe"""
+        """Test uploading an image to a recipe."""
         url = image_upload_url(self.recipe.id)
         with tempfile.NamedTemporaryFile(suffix='.jpg') as image_file:
             img = Image.new('RGB', (10, 10))
@@ -436,7 +436,7 @@ class ImageUploadTests(TestCase):
     def test_upload_image_bad_request(self):
         """Test uploading an invalid image"""
         url = image_upload_url(self.recipe.id)
-        payload = {'image': 'notimage'}
+        payload = {'image': 'notanimage'}
         res = self.client.post(url, payload, format='multipart')
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
