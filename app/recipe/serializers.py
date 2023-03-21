@@ -92,7 +92,7 @@ class RecipeDetailSerializer(RecipeSerializer):
     """Serializer for recipe detail"""
 
     class Meta(RecipeSerializer.Meta):
-        fields = RecipeSerializer.Meta.fields + ['description', ]
+        fields = RecipeSerializer.Meta.fields + ['description', 'image']
 
 
 class RecipeImageSerializer(serializers.ModelSerializer):
@@ -102,4 +102,5 @@ class RecipeImageSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = ['id', 'image']
         read_only_fields = ['id', ]
-        extra_kwargs = {'image': {'required': True}}
+        # should ture be a string?
+        extra_kwargs = {'image': {'required': 'True'}}
