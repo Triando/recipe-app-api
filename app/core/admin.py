@@ -14,18 +14,21 @@ class UserAdmin(BaseUserAdmin):
     list_display = ['email', 'name']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
+        # Is this needed? Found in code compare
+        # (_('Personal Info'), {'fields': ('name',)}),
         (
-            _('Permissions'), {
+            _('Permissions'),
+            {
                 'fields': (
                     'is_active',
                     'is_staff',
-                    'is_superuser'
+                    'is_superuser',
                 )
             }
         ),
-        (_('Important dates'), {'fields': ('last_login',)})
+        (_('Important dates'), {'fields': ('last_login',)}),
     )
-    readonly_fields = ('last_login',)
+    readonly_fields = ['last_login']
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -37,7 +40,7 @@ class UserAdmin(BaseUserAdmin):
                 'is_active',
                 'is_staff',
                 'is_superuser',
-            )
+            ),
         }),
     )
 
